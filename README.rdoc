@@ -1,6 +1,6 @@
 = tunnelr
 
-Description goes here.
+Simple rake tasks to open "Reverse" SSH tunnels for testing OAuth and other external APIs
 
 == Note on Patches/Pull Requests
  

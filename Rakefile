@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "tunnelr"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{SSH Tunnels}
+    gem.description = %Q{Simple rake tasks to open "Reverse" SSH tunnels for testing OAuth and other external APIs}
     gem.email = "rob@notch8.com"
     gem.homepage = "http://github.com/notch8/tunnelr"
     gem.authors = ["Rob Kaufman"]
