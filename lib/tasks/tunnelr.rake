@@ -46,17 +46,21 @@ tunnel_ns = namespace :tunnelr do
   
   task :config => :environment do
    tunnelr_config = File.join(RAILS_ROOT, 'config', 'tunnelr.yml')
-   TUNNELR = YAML.load(ERB.new(File.read(tunnelr_config)).result)[RAILS_ENV]
-   @public_host_username = TUNNELR['public_host_username'] 
-   @public_host = TUNNELR['public_host'] 
-   @public_port = TUNNELR['public_port'] 
-   @local_port = TUNNELR['local_port'] 
-   @ssh_port = TUNNELR['ssh_port'] || 22
-   @server_alive_interval = TUNNELR['server_alive_interval'] || 0
-   @notification = "Starting tunnel #{@public_host}:#{@public_port} to 0.0.0.0:#{@local_port}"
-   @notification << " using SSH port #{@ssh_port}" unless @ssh_port == 22
-   # "GatewayPorts yes" needs to be enabled in the remote's sshd config
-   @ssh_command = %Q[ssh -v -p #{@ssh_port} -nNT4 -o "ServerAliveInterval #{@server_alive_interval}" -R *:#{@public_port}:localhost:#{@local_port} #{@public_host_username}@#{@public_host}]
+   if !File.exists?(tunnelr_config)
+     puts "No config file, try running tunnelr:setup"
+   else
+     TUNNELR = YAML.load(ERB.new(File.read(tunnelr_config)).result)[RAILS_ENV]
+     @public_host_username = TUNNELR['public_host_username'] 
+     @public_host = TUNNELR['public_host'] 
+     @public_port = TUNNELR['public_port'] 
+     @local_port = TUNNELR['local_port'] 
+     @ssh_port = TUNNELR['ssh_port'] || 22
+     @server_alive_interval = TUNNELR['server_alive_interval'] || 0
+     @notification = "Starting tunnel #{@public_host}:#{@public_port} to 0.0.0.0:#{@local_port}"
+     @notification << " using SSH port #{@ssh_port}" unless @ssh_port == 22
+     # "GatewayPorts yes" needs to be enabled in the remote's sshd config
+     @ssh_command = %Q[ssh -v -p #{@ssh_port} -nNT4 -o "ServerAliveInterval #{@server_alive_interval}" -R *:#{@public_port}:localhost:#{@local_port} #{@public_host_username}@#{@public_host}]
+   end
   end
  
 end

@@ -1,1 +1,1 @@
-require 'lib/tunnelr'
+require 'tunnelr'
